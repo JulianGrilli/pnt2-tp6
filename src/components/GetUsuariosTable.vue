@@ -8,7 +8,10 @@
       <p class="lead">- Tabla de Usuarios Obtenidos de MockApi.io -</p>
     </div>
     <div class="container">
-      <table class="table table-striped ">
+      <div v-if="usuarios.length == 0 && requestCompleted" class="alert alert-warning mt-1">
+        <span>No hay usuario registrados.</span>      
+      </div>
+      <table class="table table-striped " v-if="usuarios.length > 0">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -43,6 +46,7 @@
     data () {
       return {
         usuarios: [],
+        requestCompleted: false,
         url: 'https://5f86225bc8a16a0016e6ab42.mockapi.io/api/v1/usuarios/usuarioform'
       }
     },
@@ -52,6 +56,7 @@
         try {
           console.log(response.data)
           this.usuarios = response.data
+          this.requestCompleted = true;
         } catch (error) {
           console.log("Error obtenido haciendo el GET de los usuario")
         }
